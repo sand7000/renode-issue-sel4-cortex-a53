@@ -1,20 +1,16 @@
-# This is a sample RESC script.
-# Please change this file and test.robot to include all necessary steps to reproduce your issue.
-# Make this repository as self contained as possible.
-#
-
-$name?="Mi-V"
+:name: Cortex-A53
+:description: This script runs the Zephyr hello_world sample on a 64-bit ARM Cortex-A53.
 
 using sysbus
+$name?="ARM Cortex-A53"
 mach create $name
-machine LoadPlatformDescription @platforms/boards/miv-board.repl
 
-$bin?=@https://dl.antmicro.com/projects/renode/shell-demo-miv.elf-s_803248-ea4ddb074325b2cc1aae56800d099c7cf56e592a
+machine LoadPlatformDescription @https://raw.githubusercontent.com/sand7000/renode-issue-cortex-a53/main/cortex-a53.repl
 
-showAnalyzer uart
+showAnalyzer uart0
 
 macro reset
 """
-    sysbus LoadELF $bin
+    sysbus LoadELF @https://github.com/sand7000/renode-issue-cortex-a53/raw/main/sel4test-driver-image-arm-qemu-arm-virt
 """
 runMacro $reset
